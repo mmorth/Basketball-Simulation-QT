@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-05-25T05:55:40
+# Project created by QtCreator 2018-05-26T18:09:54
 #
 #-------------------------------------------------
 
@@ -25,10 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        gamesimulation.cpp
 
 HEADERS += \
-        mainwindow.h
+        gamesimulation.h
 
 FORMS += \
-        mainwindow.ui
+        gamesimulation.ui
