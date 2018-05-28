@@ -4,9 +4,10 @@
 #include <ctime>
 
 GameSimulation::GameSimulation(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::GameSimulation)
+    QMainWindow(parent), // Set the parent as the main window
+    ui(new Ui::GameSimulation) // Link the GameSimulation class to its .ui file
 {
+    // Setup the ui
     ui->setupUi(this);
 
     // Setup the scoreboard table
@@ -28,9 +29,9 @@ GameSimulation::GameSimulation(QWidget *parent) :
     Team Dragons("Dragons", 95, 95);
     Team Gators("Gators", 100, 90);
 
+    // Setup the team information and default values
     this->awayTeam = Gators;
     this->homeTeam = Dragons;
-    this->possessionsRemaining = 99;
 
     awayTeamPreviousQuarterScore = 0;
     homeTeamPreviousQuarterScore = 0;
@@ -38,12 +39,19 @@ GameSimulation::GameSimulation(QWidget *parent) :
     awayTeam.setGameScore(0);
     homeTeam.setGameScore(0);
 
-    // Load the team information into the table
+    // Setup the initial possessions and set overtime to false
+    this->possessionsRemaining = 99;
+
+    overtime = false;
+
+    // Load the team information into the table and prevent the user from editing the data in the table
     ui->gameScoreBoard->setItem(1, 0, new QTableWidgetItem(QString::fromStdString(Gators.getTeamName())));
     ui->gameScoreBoard->setItem(2, 0, new QTableWidgetItem(QString::fromStdString(Dragons.getTeamName())));
+    ui->gameScoreBoard->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    // Displays the number of possessions remaining
+    // Displays the number of possessions remaining and prevent it from being edited by the user
     ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
+    ui->possessionIndicator->setReadOnly(true);
 }
 
 GameSimulation::~GameSimulation()
@@ -61,20 +69,9 @@ void GameSimulation::on_pushButton_simulateQuarter_clicked()
     simulatePossessions((possessionsRemaining%25) + 1);
 }
 
-//       } else
-//        { // Overtime
-//            // Update the quarter scoreboard scores
-//            ui->gameScoreBoard->setItem(1, 5, new QTableWidgetItem(QString::fromStdString(std::to_string(awayTeam.getGameScore() - awayTeamScore))));
-//            ui->gameScoreBoard->setItem(2, 5, new QTableWidgetItem(QString::fromStdString(std::to_string(homeTeam.getGameScore() - homeTeamScore))));
-//        }
-
-//        // Update the final score
-//        ui->gameScoreBoard->setItem(1, 6, new QTableWidgetItem(QString::fromStdString(std::to_string(awayTeam.getGameScore()))));
-//        ui->gameScoreBoard->setItem(2, 6, new QTableWidgetItem(QString::fromStdString(std::to_string(homeTeam.getGameScore()))));
-
 void GameSimulation::on_pushButton_simulateGame_clicked()
 {
-    simulatePossessions(possessionsRemaining);
+    simulatePossessions(possessionsRemaining+1);
 }
 
 void GameSimulation::on_pushButton_resetSimulation_clicked()
@@ -87,6 +84,8 @@ void GameSimulation::on_pushButton_resetSimulation_clicked()
 
     awayTeam.setGameScore(0);
     homeTeam.setGameScore(0);
+
+    overtime = false;
 
     // Clear the score board
     ui->gameScoreBoard->setItem(1, 1, new QTableWidgetItem());
@@ -107,6 +106,7 @@ void GameSimulation::on_pushButton_resetSimulation_clicked()
 }
 
 // ------------------------------- Helper Functions -------------------------------------
+
 void GameSimulation::simulatePossessions(int possessions)
 {
     // Get a different random number at different times
@@ -131,22 +131,37 @@ void GameSimulation::simulatePossessions(int possessions)
     }
 
     // Simulate the fourth quarter if it is not over yet
-    while (possessionsRemaining > -1 && possessions > 0)
+    while (possessionsRemaining > -1 && possessions > 0 && !overtime)
     {
         possessions = simulatePossession(4, possessions);
     }
+
+    // Check if game is tied after regulation
+    if (!overtime && awayTeam.getGameScore() == homeTeam.getGameScore() && possessionsRemaining == -1)
+    {
+        possessionsRemaining = 9;
+        overtime = true;
+    }
+
+    // Simulate overtime if the score is tied after regulation
+    while (possessionsRemaining > -1 && possessions > 0 && overtime)
+    {
+        possessions = simulatePossession(5, possessions);
+    }
+
+    if (awayTeam.getGameScore() == homeTeam.getGameScore() && possessionsRemaining == -1 && overtime)
+    {
+        possessionsRemaining = 9;
+        overtime = true;
+    }
+
+    // Displays the number of possessions remaining
+    ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
 
     // Update the final score
     ui->gameScoreBoard->setItem(1, 6, new QTableWidgetItem(QString::fromStdString(std::to_string(awayTeam.getGameScore()))));
     ui->gameScoreBoard->setItem(2, 6, new QTableWidgetItem(QString::fromStdString(std::to_string(homeTeam.getGameScore()))));
 }
-
-// else
-//        { // Overtime
-//            // Update the quarter scoreboard scores
-//            ui->gameScoreBoard->setItem(1, 5, new QTableWidgetItem(awayTeamScoreDifference));
-//            ui->gameScoreBoard->setItem(2, 5, new QTableWidgetItem(homeTeamScoreDifference));
-//        }
 
 int GameSimulation::simulatePossession(int quarter, int possessions)
 {
@@ -165,14 +180,19 @@ int GameSimulation::simulatePossession(int quarter, int possessions)
     {
         possessionsRemainingCondition = 24;
     }
-    else if (quarter = 4)
+    else if (quarter == 4)
     {
         possessionsRemainingCondition = -1;
     }
+    else if (overtime)
+    {
+        quarter = 5;
+        possessionsRemainingCondition = -2; // The overtime scores should not reset after each overtime
+    }
 
     // Determine the points scored for each team
-    awayTeam.setGameScore(awayTeam.getGameScore() + rand() % 2);
-    homeTeam.setGameScore(homeTeam.getGameScore() + rand() % 2);
+    awayTeam.setGameScore(awayTeam.getGameScore() + rand() % 3);
+    homeTeam.setGameScore(homeTeam.getGameScore() + rand() % 3);
 
     // Decrease the number of possessions to simulate and possessions remaining in the game
     possessionsRemaining--;
@@ -192,9 +212,6 @@ int GameSimulation::simulatePossession(int quarter, int possessions)
         awayTeamPreviousQuarterScore = awayTeam.getGameScore();
         homeTeamPreviousQuarterScore = homeTeam.getGameScore();
     }
-
-    // Displays the number of possessions remaining
-    ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
 
     return possessions;
 }

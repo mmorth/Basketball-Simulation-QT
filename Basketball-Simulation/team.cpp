@@ -8,7 +8,7 @@ Team::Team()
     this->gameScore = 0;
 }
 
-Team::Team(string teamName, int offensiveRating, int defensiveRating, int gameScore)
+Team::Team(string teamName, int offensiveRating, int defensiveRating)
 {
     this->teamName = teamName;
     this->offensiveRating = offensiveRating;

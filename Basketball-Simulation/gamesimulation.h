@@ -4,38 +4,125 @@
 #include <QMainWindow>
 #include "team.h"
 
+/**
+ *Represents the ui for the GameSimulation class
+ */
 namespace Ui {
 class GameSimulation;
 }
 
+/**
+ * @brief The GameSimulation class
+ *      Represents a basketball game simulation class
+ */
 class GameSimulation : public QMainWindow
 {
+    // Convert this object to a Qt object
     Q_OBJECT
 
 public:
+    /**
+     * @brief GameSimulation::GameSimulation
+     *      Creates a GameSimulation class that shows a basketball game simulation
+     * @param parent
+     *      The parent widget
+     */
     explicit GameSimulation(QWidget *parent = 0);
+
+    /**
+     * @brief GameSimulation::~GameSimulation
+     *      The GameSimulation destructor
+     */
     ~GameSimulation();
 
 private slots:
+    /**
+     * @brief GameSimulation::on_pushButton_simulatePossession_clicked
+     *      Simulates a basketball possession when the "Possession" button is clicked and released
+     */
     void on_pushButton_simulatePossession_clicked();
 
+    /**
+     * @brief GameSimulation::on_pushButton_simulateQuarter_clicked
+     *      Simulates a quarter when the "Quarter" button is clicked and released
+     */
     void on_pushButton_simulateQuarter_clicked();
 
+    /**
+     * @brief GameSimulation::on_pushButton_simulateGame_clicked
+     *      Simulates the remainder of the game when the "Game" button is clicked.
+     */
     void on_pushButton_simulateGame_clicked();
 
+    /**
+     * @brief GameSimulation::on_pushButton_resetSimulation_clicked
+     *
+     */
     void on_pushButton_resetSimulation_clicked();
 
 private:
+    /**
+     * @brief ui
+     *      The ui for the GameSimulation class
+     */
     Ui::GameSimulation *ui;
 
+    /**
+     * @brief awayTeam
+     *      Stores the information about the away basketball team
+     */
     Team awayTeam;
+
+    /**
+     * @brief homeTeam
+     *      Stores the information about the home basketball team
+     */
     Team homeTeam;
 
+    /**
+     * @brief awayTeamPreviousQuarterScore
+     *      Stores the number of points scored by the away team in the previous quarters
+     *      Used to calculated how many points they scored in one quarter
+     */
     int awayTeamPreviousQuarterScore;
+
+    /**
+     * @brief homeTeamPreviousQuarterScore
+     *      Stores the number of points scored by the home team in the previous quarters
+     *      Used to calculate how many points they scored in one quarter
+     */
     int homeTeamPreviousQuarterScore;
+
+    /**
+     * @brief possessionsRemaining
+     *      Stores the number of possessions remaining in the basketball game
+     */
     int possessionsRemaining;
 
+    /**
+     * @brief overtime
+     *      Has a value of true if the game is in overtime. Has a value of false otherwise.
+     */
+    bool overtime;
+
+    /**
+     * @brief GameSimulation::simulatePossessions
+     *      Simulates a certain number of basketball possessions
+     * @param possessions
+     *      The number of possessions to simulate
+     */
     void simulatePossessions(int possessions);
+
+    /**
+     * @brief GameSimulation::simulatePossession
+     *      Simulates a single basketball possession
+     * @param quarter
+     *      The current quarter the game is in
+     * @param possessions
+     *      The number of possessions that will be simulated
+     * @return
+     *      The number of possessions remaining
+     */
     int simulatePossession(int quarter, int possessions);
 };
 
