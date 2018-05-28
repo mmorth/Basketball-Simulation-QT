@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         gamesimulation.cpp \
-    team.cpp
+    team.cpp \
+    helper.cpp
 
 HEADERS += \
         gamesimulation.h \
-    team.h
+    team.h \
+    helper.h
 
 FORMS += \
         gamesimulation.ui

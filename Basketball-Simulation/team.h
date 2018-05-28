@@ -16,7 +16,8 @@ private:
 
 
 public:
-    Team(string teamName, int offensiveRating, int defensiveRating, int gameScore);
+    Team();
+    Team(string teamName, int offensiveRating, int defensiveRating, int gameScore = 0);
 
     string getTeamName() const;
     void setTeamName(const string &value);

@@ -2,6 +2,7 @@
 #define GAMESIMULATION_H
 
 #include <QMainWindow>
+#include "team.h"
 
 namespace Ui {
 class GameSimulation;
@@ -26,6 +27,13 @@ private slots:
 
 private:
     Ui::GameSimulation *ui;
+
+    Team awayTeam;
+    Team homeTeam;
+
+    int awayTeamScore;
+    int homeTeamScore;
+    int possessionsRemaining;
 };
 
 #endif // GAMESIMULATION_H

@@ -1,11 +1,19 @@
 #include "team.h"
 
+Team::Team()
+{
+    this->teamName = "";
+    this->offensiveRating = 0;
+    this->defensiveRating = 0;
+    this->gameScore = 0;
+}
+
 Team::Team(string teamName, int offensiveRating, int defensiveRating, int gameScore)
 {
     this->teamName = teamName;
     this->offensiveRating = offensiveRating;
     this->defensiveRating = defensiveRating;
-    this->gameScore = gameScore;
+    this->gameScore = 0;
 }
 
 int Team::getOffensiveRating() const
