@@ -31,9 +31,12 @@ private:
     Team awayTeam;
     Team homeTeam;
 
-    int awayTeamScore;
-    int homeTeamScore;
+    int awayTeamPreviousQuarterScore;
+    int homeTeamPreviousQuarterScore;
     int possessionsRemaining;
+
+    void simulatePossessions(int possessions);
+    int simulatePossession(int quarter, int possessions);
 };
 
 #endif // GAMESIMULATION_H
