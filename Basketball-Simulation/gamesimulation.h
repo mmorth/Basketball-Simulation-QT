@@ -124,6 +124,20 @@ private:
      *      The number of possessions remaining
      */
     int simulatePossession(int quarter, int possessions);
+
+    /**
+     * @brief determineScoringOutcome
+     *      Determines and returns the scoring outcome for each team in a possession
+     */
+    void determineScoringOutcome();
+
+    /**
+     * @brief determineScoreIncrease
+     *      Determines the score increase for a team for a given possession
+     * @return
+     *      The score increase for a team in a given possession
+     */
+    int determineScoreIncrease(int randNum, double teamRatio);
 };
 
 #endif // GAMESIMULATION_H

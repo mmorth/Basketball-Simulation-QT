@@ -26,8 +26,8 @@ GameSimulation::GameSimulation(QWidget *parent) :
     ui->gameScoreBoard->setItem(0, 6, new QTableWidgetItem("Final"));
 
     // Create the teams
-    Team Dragons("Dragons", 95, 95);
-    Team Gators("Gators", 100, 90);
+    Team Dragons("Dragons", 100, 100);
+    Team Gators("Gators", 80, 80);
 
     // Setup the team information and default values
     this->awayTeam = Gators;
@@ -52,6 +52,9 @@ GameSimulation::GameSimulation(QWidget *parent) :
     // Displays the number of possessions remaining and prevent it from being edited by the user
     ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
     ui->possessionIndicator->setReadOnly(true);
+
+    // Create a new random number seed
+    srand ( time(NULL) );
 }
 
 GameSimulation::~GameSimulation()
@@ -109,9 +112,6 @@ void GameSimulation::on_pushButton_resetSimulation_clicked()
 
 void GameSimulation::simulatePossessions(int possessions)
 {
-    // Get a different random number at different times
-    srand ( time(NULL) );
-
     // Simulate the first quarter if it is not over yet
     while (possessionsRemaining > 74 && possessions > 0)
     {
@@ -191,8 +191,7 @@ int GameSimulation::simulatePossession(int quarter, int possessions)
     }
 
     // Determine the points scored for each team
-    awayTeam.setGameScore(awayTeam.getGameScore() + rand() % 3);
-    homeTeam.setGameScore(homeTeam.getGameScore() + rand() % 3);
+    determineScoringOutcome();
 
     // Decrease the number of possessions to simulate and possessions remaining in the game
     possessionsRemaining--;
@@ -214,4 +213,63 @@ int GameSimulation::simulatePossession(int quarter, int possessions)
     }
 
     return possessions;
+}
+
+void GameSimulation::determineScoringOutcome()
+{
+    int awayTeamScoreIncrease = 0;
+    int homeTeamScoreIncrease = 0;
+
+    // Determine the score increase for the away team
+    int awayTeamRandNum = rand() % 1000;
+
+    double awayToHomeTeamRatio = awayTeam.getOffensiveRating() / (double) homeTeam.getDefensiveRating();
+    double homeToAwayTeamRatio = homeTeam.getOffensiveRating() / (double) homeTeam.getDefensiveRating();
+
+    if (awayToHomeTeamRatio > homeToAwayTeamRatio) {
+        homeToAwayTeamRatio = 1;
+    }
+    else
+    {
+        awayToHomeTeamRatio = 1;
+    }
+
+    awayTeamScoreIncrease = determineScoreIncrease(awayTeamRandNum, awayToHomeTeamRatio);
+
+    awayTeam.setGameScore(awayTeam.getGameScore() + awayTeamScoreIncrease);
+
+    // Determine the score increase for the home team
+    int homeTeamRandNum = rand() % 1000;
+
+
+
+    homeTeamScoreIncrease = determineScoreIncrease(homeTeamRandNum, homeToAwayTeamRatio);
+
+    homeTeam.setGameScore(homeTeam.getGameScore() + homeTeamScoreIncrease);
+}
+
+int GameSimulation::determineScoreIncrease(int randNum, double teamRatio)
+{
+    int teamScoreIncrease;
+
+    double teamScoreDecision = randNum * teamRatio;
+
+    if (teamScoreDecision > 900)
+    {
+        teamScoreIncrease = 3;
+    }
+    else if (teamScoreDecision > 650)
+    {
+        teamScoreIncrease = 2;
+    }
+    else if (teamScoreDecision > 400)
+    {
+        teamScoreIncrease = 1;
+    }
+    else
+    {
+        teamScoreIncrease = 0;
+    }
+
+    return teamScoreIncrease;
 }
