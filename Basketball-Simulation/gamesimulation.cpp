@@ -2,6 +2,7 @@
 #include "ui_gamesimulation.h"
 #include <iostream>
 #include <ctime>
+#include "teamdetails.h"
 
 GameSimulation::GameSimulation(QWidget *parent) :
     QMainWindow(parent), // Set the parent as the main window
@@ -272,4 +273,12 @@ int GameSimulation::determineScoreIncrease(int randNum, double teamRatio)
     }
 
     return teamScoreIncrease;
+}
+
+void GameSimulation::on_teamDetailsButton_clicked()
+{
+    // Switch to the Team Details window
+    hide();
+    teamDetails = new TeamDetails(this);
+    teamDetails->show();
 }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "team.h"
+#include "teamdetails.h"
 
 /**
  *Represents the ui for the GameSimulation class
@@ -60,12 +61,24 @@ private slots:
      */
     void on_pushButton_resetSimulation_clicked();
 
+    /**
+     * @brief on_pushButton_clicked
+     *      Switches to the Team Details window
+     */
+    void on_teamDetailsButton_clicked();
+
 private:
     /**
      * @brief ui
      *      The ui for the GameSimulation class
      */
     Ui::GameSimulation *ui;
+
+    /**
+     * @brief teamDetails
+     *      Represents the ui for the TeamDetails class
+     */
+    TeamDetails *teamDetails;
 
     /**
      * @brief awayTeam
