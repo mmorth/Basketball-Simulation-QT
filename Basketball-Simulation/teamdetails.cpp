@@ -8,9 +8,6 @@ TeamDetails::TeamDetails(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->teamNameLabel->setReadOnly(true);
-    ui->offensiveRatingLabel->setReadOnly(true);
-    ui->defensiveRatingLabel->setReadOnly(true);
     ui->directionsLabel->setReadOnly(true);
 }
 
