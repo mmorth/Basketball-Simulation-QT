@@ -54,6 +54,9 @@ GameSimulation::GameSimulation(QWidget *parent) :
     ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
     ui->possessionIndicator->setReadOnly(true);
 
+    // Resize the table so it fills the whole space
+    ui->gameScoreBoard->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     // Create a new random number seed
     srand ( time(NULL) );
 }
