@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>812</width>
-    <height>357</height>
+    <width>692</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,6 +52,9 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <widget class="QPushButton" name="pushButton_simulatePossession">
         <property name="text">
@@ -82,6 +85,37 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QLabel" name="teamSelectionLabel">
+      <property name="text">
+       <string>Team Selection (WARNING: changing teams in the middle of a simlation will reset the simulation):</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QFormLayout" name="teamSelectionForm">
+      <item row="1" column="0">
+       <widget class="QLabel" name="homeTeamSelectionLabel">
+        <property name="text">
+         <string>Home Team: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="homeTeamComboBox"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="awayTeamCombobox"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="awayTeamSelectionLabel">
+        <property name="text">
+         <string>Away Team: </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -89,7 +123,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>812</width>
+     <width>692</width>
      <height>22</height>
     </rect>
    </property>

@@ -45,6 +45,10 @@ GameSimulation::GameSimulation(QWidget *parent) :
 
     overtime = false;
 
+//    QSqlDatabase myDB = QSqlDatabase::addDatabase("");
+
+    QStringList teams = {"Dragons", "Gators", "Thunder", "Tigers", "Titans"};
+
     // Load the team information into the table and prevent the user from editing the data in the table
     ui->gameScoreBoard->setItem(1, 0, new QTableWidgetItem(QString::fromStdString(Gators.getTeamName())));
     ui->gameScoreBoard->setItem(2, 0, new QTableWidgetItem(QString::fromStdString(Dragons.getTeamName())));
@@ -56,6 +60,7 @@ GameSimulation::GameSimulation(QWidget *parent) :
 
     // Resize the table so it fills the whole space
     ui->gameScoreBoard->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->gameScoreBoard->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // Create a new random number seed
     srand ( time(NULL) );

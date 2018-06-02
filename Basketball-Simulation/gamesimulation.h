@@ -5,6 +5,10 @@
 #include "team.h"
 #include "teamdetails.h"
 
+#include <QtSql>
+#include <QDebug>
+#include <QFileInfo>
+
 /**
  *Represents the ui for the GameSimulation class
  */
