@@ -27,13 +27,18 @@ SOURCES += \
         main.cpp \
         gamesimulation.cpp \
     team.cpp \
-    teamdetails.cpp
+    teamdetails.cpp \
+    dbhandler.cpp \
+    teaminfo.cpp
 
 HEADERS += \
         gamesimulation.h \
     team.h \
-    teamdetails.h
+    teamdetails.h \
+    dbhandler.h \
+    teaminfo.h
 
 FORMS += \
         gamesimulation.ui \
-    teamdetails.ui
+    teamdetails.ui \
+    teaminfo.ui

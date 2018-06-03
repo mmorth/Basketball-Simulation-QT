@@ -27,8 +27,8 @@ GameSimulation::GameSimulation(QWidget *parent) :
     ui->gameScoreBoard->setItem(0, 6, new QTableWidgetItem("Final"));
 
     // Create the teams
-    Team Dragons("Dragons", 100, 100);
-    Team Gators("Gators", 80, 80);
+    Team Dragons("Thunder", 95, 70);
+    Team Gators("Titans", 85, 75);
 
     // Setup the team information and default values
     this->awayTeam = Gators;
