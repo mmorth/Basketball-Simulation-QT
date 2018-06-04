@@ -27,6 +27,20 @@ public:
     void dbHandler::addTeamTable();
 
     /**
+     * @brief dbHandler::editTeam
+     *      Edits a team in the sqlite database
+     * @param id
+     *      The id of the team
+     * @param teamName
+     *      The name of the team
+     * @param offensiveRating
+     *      The offensive rating of the team
+     * @param defensiveRating
+     *      The defensive rating of the team
+     */
+    void dbHandler::editTeam(int id, QString teamName, int offensiveRating, int defensiveRating);
+
+    /**
      * @brief dbHandler::removeTeamTable
      *      Removes the team table
      */

@@ -61,21 +61,35 @@ void dbHandler::addTeam(int id, QString teamName, int offensiveRating, int defen
 
     QSqlQuery query;
 
-    query.prepare("INSERT INTO teams ("
-                  "ID,"
-                  "team_name,"
-                  "offensive_rating,"
-                  "defensive_rating)"
-                  "VALUES (?,?,?,?);");
+    QString insertTeamQuery = "INSERT INTO teams (ID, team_name, offensive_rating, defensive_rating)"
+                  "VALUES (" + id + ", " +  teamName + ", " + offensiveRating + ", " + defensiveRating + "); ";
 
-    query.addBindValue(id);
-    query.addBindValue(teamName);
-    query.addBindValue(offensiveRating);
-    query.addBindValue(defensiveRating);
+    query.exec(insertTeamQuery);
 
     if (!query.exec())
     {
         qDebug()<<"Error adding to teams";
+    }
+
+    db.close();
+}
+
+void dbHandler::editTeam(int id, QString teamName, int offensiveRating, int defensiveRating)
+{
+
+
+    createConnection();
+
+    QSqlQuery query;
+
+    QString updateTeamQuery = "UPDATE teams SET offensive_rating = " + offensiveRating + " defensive_rating = " + defensiveRating +
+            "WHERE team_name = " + teamName + "; ";
+
+    query.exec(updateTeamQuery);
+
+    if (!query.exec())
+    {
+        qDebug()<<"Error updating teams";
     }
 
     db.close();
