@@ -64,6 +64,9 @@ GameSimulation::GameSimulation(QWidget *parent) :
 
     // Create a new random number seed
     srand ( time(NULL) );
+
+    // Update the teams comboboxes with the current teams stored in the database
+    updateTeamsComboboxes();
 }
 
 GameSimulation::~GameSimulation()
@@ -289,4 +292,9 @@ void GameSimulation::on_teamDetailsButton_clicked()
     hide();
     teamDetails = new TeamDetails(this);
     teamDetails->show();
+}
+
+void GameSimulation::updateTeamsComboboxes()
+{
+
 }

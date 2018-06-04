@@ -18,13 +18,13 @@ public:
      * @brief dbHandler::createConnection
      *      Creates a connection to the database
      */
-    void dbHandler::createConnection();
+    void createConnection();
 
     /**
      * @brief dbHandler::addTeamTable
      *      Adds the team table
      */
-    void dbHandler::addTeamTable();
+    void addTeamTable();
 
     /**
      * @brief dbHandler::editTeam
@@ -38,13 +38,13 @@ public:
      * @param defensiveRating
      *      The defensive rating of the team
      */
-    void dbHandler::editTeam(int id, QString teamName, int offensiveRating, int defensiveRating);
+    void editTeam(QString teamName, int offensiveRating, int defensiveRating);
 
     /**
      * @brief dbHandler::removeTeamTable
      *      Removes the team table
      */
-    void dbHandler::removeTeamTable();
+    void removeTeamTable();
 
     /**
      * @brief dbHandler::addValue
@@ -58,7 +58,7 @@ public:
      * @param defensiveRating
      *      The defensiveRating of the new team
      */
-    void dbHandler::addValue(int id, QString teamName, int offensiveRating, int defensiveRating);
+    void addTeam(QString teamName, int offensiveRating, int defensiveRating);
 };
 
 #endif // DBHANDLER_H

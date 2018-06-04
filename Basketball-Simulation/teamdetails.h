@@ -16,6 +16,12 @@ public:
     explicit TeamDetails(QWidget *parent = 0);
     ~TeamDetails();
 
+    /**
+     * @brief TeamDetails::updateTeamsListView
+     *      Updates the teams list view widget with all the current teams stored in the database
+     */
+    void updateTeamsListView();
+
 private slots:
     /**
      * @brief on_createTeamButton_clicked
@@ -31,7 +37,6 @@ private slots:
 
 private:
     Ui::TeamDetails *ui;
-//    GameSimulation *gs;
 };
 
 #endif // TEAMDETAILS_H

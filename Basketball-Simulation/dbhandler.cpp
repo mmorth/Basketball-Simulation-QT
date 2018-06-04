@@ -11,7 +11,7 @@ void dbHandler::addTeamTable()
 
     // Create the teams table
     QString createTeamTableQuery = "CREATE TABLE teams ("
-            "ID integer UNIQUE,"
+            "ID int NOT NULL AUTO_INCREMENT,"
             "team_name VARCHAR(30) UNIQUE,"
             "offensive_rating integer,"
             "defensive_rating integer);";
@@ -55,14 +55,14 @@ void dbHandler::createConnection()
     db.close();
 }
 
-void dbHandler::addTeam(int id, QString teamName, int offensiveRating, int defensiveRating)
+void dbHandler::addTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
     createConnection();
 
     QSqlQuery query;
 
-    QString insertTeamQuery = "INSERT INTO teams (ID, team_name, offensive_rating, defensive_rating)"
-                  "VALUES (" + id + ", " +  teamName + ", " + offensiveRating + ", " + defensiveRating + "); ";
+    QString insertTeamQuery = "INSERT INTO teams (team_name, offensive_rating, defensive_rating)"
+                  "VALUES (" + teamName + ", " + offensiveRating + ", " + defensiveRating + "); ";
 
     query.exec(insertTeamQuery);
 
@@ -74,10 +74,8 @@ void dbHandler::addTeam(int id, QString teamName, int offensiveRating, int defen
     db.close();
 }
 
-void dbHandler::editTeam(int id, QString teamName, int offensiveRating, int defensiveRating)
+void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
-
-
     createConnection();
 
     QSqlQuery query;

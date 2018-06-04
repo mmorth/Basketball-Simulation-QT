@@ -40,6 +40,46 @@ public:
      */
     ~GameSimulation();
 
+    /**
+     * @brief GameSimulation::simulatePossessions
+     *      Simulates a certain number of basketball possessions
+     * @param possessions
+     *      The number of possessions to simulate
+     */
+    void simulatePossessions(int possessions);
+
+    /**
+     * @brief GameSimulation::simulatePossession
+     *      Simulates a single basketball possession
+     * @param quarter
+     *      The current quarter the game is in
+     * @param possessions
+     *      The number of possessions that will be simulated
+     * @return
+     *      The number of possessions remaining
+     */
+    int simulatePossession(int quarter, int possessions);
+
+    /**
+     * @brief determineScoringOutcome
+     *      Determines and returns the scoring outcome for each team in a possession
+     */
+    void determineScoringOutcome();
+
+    /**
+     * @brief determineScoreIncrease
+     *      Determines the score increase for a team for a given possession
+     * @return
+     *      The score increase for a team in a given possession
+     */
+    int determineScoreIncrease(int randNum, double teamRatio);
+
+    /**
+     * @brief GameSimulation::updateTeamsComboboxes
+     *      Update the teams comboboxes with the current teams stored in the database
+     */
+    void updateTeamsComboboxes();
+
 private slots:
     /**
      * @brief GameSimulation::on_pushButton_simulatePossession_clicked
@@ -121,40 +161,6 @@ private:
      *      Has a value of true if the game is in overtime. Has a value of false otherwise.
      */
     bool overtime;
-
-    /**
-     * @brief GameSimulation::simulatePossessions
-     *      Simulates a certain number of basketball possessions
-     * @param possessions
-     *      The number of possessions to simulate
-     */
-    void simulatePossessions(int possessions);
-
-    /**
-     * @brief GameSimulation::simulatePossession
-     *      Simulates a single basketball possession
-     * @param quarter
-     *      The current quarter the game is in
-     * @param possessions
-     *      The number of possessions that will be simulated
-     * @return
-     *      The number of possessions remaining
-     */
-    int simulatePossession(int quarter, int possessions);
-
-    /**
-     * @brief determineScoringOutcome
-     *      Determines and returns the scoring outcome for each team in a possession
-     */
-    void determineScoringOutcome();
-
-    /**
-     * @brief determineScoreIncrease
-     *      Determines the score increase for a team for a given possession
-     * @return
-     *      The score increase for a team in a given possession
-     */
-    int determineScoreIncrease(int randNum, double teamRatio);
 };
 
 #endif // GAMESIMULATION_H
