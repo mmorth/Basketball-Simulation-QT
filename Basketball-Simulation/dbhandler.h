@@ -3,7 +3,7 @@
 
 #include <QDebug>
 #include <QSql>
-
+#include <QSqlQuery>
 
 class dbHandler
 {
@@ -18,7 +18,9 @@ public:
      * @brief dbHandler::createConnection
      *      Creates a connection to the database
      */
-    void createConnection();
+    void static createConnection();
+
+    void static closeConnection();
 
     /**
      * @brief dbHandler::addTeamTable
@@ -59,6 +61,7 @@ public:
      *      The defensiveRating of the new team
      */
     void addTeam(QString teamName, int offensiveRating, int defensiveRating);
+
 };
 
 #endif // DBHANDLER_H

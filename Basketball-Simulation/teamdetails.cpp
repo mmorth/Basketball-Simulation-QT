@@ -43,7 +43,8 @@ void TeamDetails::on_createTeamButton_clicked()
     // Determine if input is valid and process
     if (team_name.length() >= 0)
     {
-        addTeam(team_name, atoi(ui->offensiveRatingInput->text()), atoi(ui->defensiveRatingInput->text()));
+        dbHandler dbHandler;
+        dbHandler.addTeam(team_name, ui->offensiveRatingInput->text().toInt(), ui->defensiveRatingInput->text().toInt());
     }
     else
     {

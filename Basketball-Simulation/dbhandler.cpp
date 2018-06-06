@@ -23,7 +23,7 @@ void dbHandler::addTeamTable()
         qDebug()<<"Cannot create team table";
     }
 
-    db.close();
+    closeConnection();
 }
 
 void dbHandler::removeTeamTable()
@@ -34,13 +34,11 @@ void dbHandler::removeTeamTable()
     QSqlQuery query;
     query.exec(removeTeamTableQuery);
 
-    db.close();
+    closeConnection();
 }
 
 void dbHandler::createConnection()
 {
-    createConnection();
-
     // Create and connect the SQLite database
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -51,6 +49,11 @@ void dbHandler::createConnection()
     {
         qDebug()<<"DBCreateFail";
     }
+}
+
+void dbHandler::closeConnection()
+{
+    QSqlDatabase db;
 
     db.close();
 }
@@ -71,7 +74,7 @@ void dbHandler::addTeam(QString teamName, int offensiveRating, int defensiveRati
         qDebug()<<"Error adding to teams";
     }
 
-    db.close();
+    closeConnection();
 }
 
 void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRating)
@@ -80,7 +83,7 @@ void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRat
 
     QSqlQuery query;
 
-    QString updateTeamQuery = "UPDATE teams SET offensive_rating = " + offensiveRating + " defensive_rating = " + defensiveRating +
+    QString updateTeamQuery = "UPDATE teams SET offensive_rating = " + QString::number(offensiveRating) + " defensive_rating = " + QString::number(defensiveRating) +
             "WHERE team_name = " + teamName + "; ";
 
     query.exec(updateTeamQuery);
@@ -90,5 +93,5 @@ void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRat
         qDebug()<<"Error updating teams";
     }
 
-    db.close();
+    closeConnection();
 }
