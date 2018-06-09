@@ -90,33 +90,7 @@ void GameSimulation::on_pushButton_simulateGame_clicked()
 
 void GameSimulation::on_pushButton_resetSimulation_clicked()
 {
-    // Update the possession and score information
-    possessionsRemaining = 99;
-
-    awayTeamPreviousQuarterScore = 0;
-    homeTeamPreviousQuarterScore = 0;
-
-    awayTeam.setGameScore(0);
-    homeTeam.setGameScore(0);
-
-    overtime = false;
-
-    // Clear the score board
-    ui->gameScoreBoard->setItem(1, 1, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(2, 1, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(1, 2, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(2, 2, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(1, 3, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(2, 3, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(1, 4, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(2, 4, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(1, 5, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(2, 5, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(1, 6, new QTableWidgetItem());
-    ui->gameScoreBoard->setItem(2, 6, new QTableWidgetItem());
-
-    // Displays the number of possessions remaining
-    ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
+    this->resetGame();
 }
 
 // ------------------------------- Helper Functions -------------------------------------
@@ -232,48 +206,38 @@ void GameSimulation::determineScoringOutcome()
     int homeTeamScoreIncrease = 0;
 
     // Determine the score increase for the away team
-    int awayTeamRandNum = rand() % 1000;
+    int awayTeamRandNum = rand() % 100;
 
-    double awayToHomeTeamRatio = awayTeam.getOffensiveRating() / (double) homeTeam.getDefensiveRating();
-    double homeToAwayTeamRatio = homeTeam.getOffensiveRating() / (double) homeTeam.getDefensiveRating();
+    int awayTeamOffense = awayTeam.getOffensiveRating() - homeTeam.getDefensiveRating();
+    int homeTeamOffense = homeTeam.getOffensiveRating() - awayTeam.getDefensiveRating();
 
-    if (awayToHomeTeamRatio > homeToAwayTeamRatio) {
-        homeToAwayTeamRatio = 1;
-    }
-    else
-    {
-        awayToHomeTeamRatio = 1;
-    }
-
-    awayTeamScoreIncrease = determineScoreIncrease(awayTeamRandNum, awayToHomeTeamRatio);
+    awayTeamScoreIncrease = determineScoreIncrease(awayTeamRandNum, 500 + awayTeamOffense);
 
     awayTeam.setGameScore(awayTeam.getGameScore() + awayTeamScoreIncrease);
 
     // Determine the score increase for the home team
-    int homeTeamRandNum = rand() % 1000;
+    int homeTeamRandNum = rand() % 100;
 
-
-
-    homeTeamScoreIncrease = determineScoreIncrease(homeTeamRandNum, homeToAwayTeamRatio);
+    homeTeamScoreIncrease = determineScoreIncrease(homeTeamRandNum, 500 + homeTeamOffense);
 
     homeTeam.setGameScore(homeTeam.getGameScore() + homeTeamScoreIncrease);
 }
 
-int GameSimulation::determineScoreIncrease(int randNum, double teamRatio)
+int GameSimulation::determineScoreIncrease(int randNum, int teamRatio)
 {
     int teamScoreIncrease;
 
-    double teamScoreDecision = randNum * teamRatio;
+    int teamScoreDecision = randNum * teamRatio;
 
-    if (teamScoreDecision > 900)
+    if (teamScoreDecision > 45000)
     {
         teamScoreIncrease = 3;
     }
-    else if (teamScoreDecision > 650)
+    else if (teamScoreDecision > 32500)
     {
         teamScoreIncrease = 2;
     }
-    else if (teamScoreDecision > 400)
+    else if (teamScoreDecision > 25000)
     {
         teamScoreIncrease = 1;
     }
@@ -298,6 +262,8 @@ void GameSimulation::on_awayTeamCombobox_activated(const QString &arg1)
     dbHandler dbHand;
     this->awayTeam = dbHand.findTeam(arg1);
     ui->gameScoreBoard->setItem(1, 0, new QTableWidgetItem(arg1));
+
+    this->resetGame();
 }
 
 void GameSimulation::on_homeTeamComboBox_activated(const QString &arg1)
@@ -305,4 +271,37 @@ void GameSimulation::on_homeTeamComboBox_activated(const QString &arg1)
     dbHandler dbHand;
     this->homeTeam = dbHand.findTeam(arg1);
     ui->gameScoreBoard->setItem(2, 0, new QTableWidgetItem(arg1));
+
+    this->resetGame();
+}
+
+void GameSimulation::resetGame()
+{
+    // Update the possession and score information
+    possessionsRemaining = 99;
+
+    awayTeamPreviousQuarterScore = 0;
+    homeTeamPreviousQuarterScore = 0;
+
+    awayTeam.setGameScore(0);
+    homeTeam.setGameScore(0);
+
+    overtime = false;
+
+    // Clear the score board
+    ui->gameScoreBoard->setItem(1, 1, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(2, 1, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(1, 2, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(2, 2, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(1, 3, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(2, 3, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(1, 4, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(2, 4, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(1, 5, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(2, 5, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(1, 6, new QTableWidgetItem());
+    ui->gameScoreBoard->setItem(2, 6, new QTableWidgetItem());
+
+    // Displays the number of possessions remaining
+    ui->possessionIndicator->setText(QString::fromStdString("Possessions Remaining: " + std::to_string(possessionsRemaining + 1)));
 }

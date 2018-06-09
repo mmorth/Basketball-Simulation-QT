@@ -56,9 +56,6 @@ void dbHandler::removeTeamTable()
 
 void dbHandler::addTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
-
-    qDebug()<<db.tables();
-
     QSqlQuery query;
 
     if (!query.exec("INSERT INTO Teams (team_name, offensive_rating, defensive_rating) VALUES ('" + teamName + "', '" + QString::number(offensiveRating) + "', '" + QString::number(defensiveRating) + "');"))
@@ -70,24 +67,26 @@ void dbHandler::addTeam(QString teamName, int offensiveRating, int defensiveRati
 
 void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
-    // Create and connect the SQLite database
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/mmorth/Code/Databases/basketball_simulation_database.sqlite");
-    db.open();
-
     QSqlQuery query;
 
-    QString updateTeamQuery = "UPDATE teams SET offensive_rating = " + QString::number(offensiveRating) + " defensive_rating = " + QString::number(defensiveRating) +
-            "WHERE team_name = " + teamName + "; ";
-
-    query.exec(updateTeamQuery);
-
-    if (!query.exec())
+    if (!query.exec("UPDATE teams SET offensive_rating = '" + QString::number(offensiveRating) + "', defensive_rating = '" + QString::number(defensiveRating) +
+                    "' WHERE team_name = '" + teamName + "'; "))
     {
-        qDebug()<<"Error updating teams";
+        qDebug()<<query.lastError();
+        qDebug()<<"Error updating team";
     }
 
     db.close();
+}
+
+void dbHandler::removeTeam(QString teamName)
+{
+    QSqlQuery query;
+
+    if (!query.exec("DELETE FROM Teams WHERE team_name = '" + teamName + "';"))
+    {
+        qDebug()<<query.lastError();
+    }
 }
 
 QStringList dbHandler::listTeams()

@@ -60,6 +60,12 @@ public:
     void addTeam(QString teamName, int offensiveRating, int defensiveRating);
 
     /**
+     * @brief dbHandler::removeTeam
+     * @param teamName
+     */
+    void removeTeam(QString teamName);
+
+    /**
      * @brief listTeams
      *      Returns a list of the teams in the database
      * @return

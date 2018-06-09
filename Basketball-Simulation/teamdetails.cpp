@@ -60,7 +60,9 @@ void TeamDetails::on_createTeamButton_clicked()
     }
 
     // Call to update the teams list view with the newly created team
-//    updateTeamsListView();
+    dbHandler dbHand;
+    QStringList teams = dbHand.listTeams();
+    ui->teamListView->setModel(new QStringListModel(teams));
 
 }
 

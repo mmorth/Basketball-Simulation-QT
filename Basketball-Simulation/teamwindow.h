@@ -21,6 +21,10 @@ public:
 private slots:
     void on_teamDetailsBackButton_clicked();
 
+    void on_updateTeamButton_clicked();
+
+    void on_deleteTeamButton_clicked();
+
 private:
     Ui::TeamWindow *ui;
 };

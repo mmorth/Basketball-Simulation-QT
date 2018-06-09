@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "teamwindow.h"
-//#include "gamesimulation.h"
 
 namespace Ui {
 class TeamDetails;

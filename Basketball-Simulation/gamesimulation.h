@@ -73,7 +73,7 @@ public:
      * @return
      *      The score increase for a team in a given possession
      */
-    int determineScoreIncrease(int randNum, double teamRatio);
+    int determineScoreIncrease(int randNum, int teamRatio);
 
     /**
      * @brief GameSimulation::updateTeamsComboboxes
@@ -166,6 +166,8 @@ private:
      *      Has a value of true if the game is in overtime. Has a value of false otherwise.
      */
     bool overtime;
+
+    void resetGame();
 };
 
 #endif // GAMESIMULATION_H
