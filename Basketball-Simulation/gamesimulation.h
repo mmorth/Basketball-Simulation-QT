@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "team.h"
 #include "teamdetails.h"
+#include "dbhandler.h"
 
 #include <QtSql>
 #include <QDebug>

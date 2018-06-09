@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QSql>
 #include <QSqlQuery>
+#include <QSqlError>
+#include <QStringList>
 
 class dbHandler
 {
@@ -14,13 +16,7 @@ public:
      */
     dbHandler();
 
-    /**
-     * @brief dbHandler::createConnection
-     *      Creates a connection to the database
-     */
-    void static createConnection();
-
-    void static closeConnection();
+    ~dbHandler();
 
     /**
      * @brief dbHandler::addTeamTable
@@ -61,6 +57,17 @@ public:
      *      The defensiveRating of the new team
      */
     void addTeam(QString teamName, int offensiveRating, int defensiveRating);
+
+    /**
+     * @brief listTeams
+     *      Returns a list of the teams in the database
+     * @return
+     *      A QSqlQueryModel representing the list of teams in the database
+     */
+    QStringList listTeams();
+
+private:
+    QSqlDatabase db;
 
 };
 

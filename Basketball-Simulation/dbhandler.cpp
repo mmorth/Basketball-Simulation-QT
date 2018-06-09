@@ -2,16 +2,32 @@
 
 dbHandler::dbHandler()
 {
+    // Create and connect the SQLite database
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/mmorth/GIT/Basketball-Simulation-QT/build-Basketball-Simulation-Desktop_Qt_5_11_0_GCC_64bit-Debug/basketball_simulation_database.sqlite");
 
+    if (!db.open())
+    {
+        qDebug()<<"DB NOT OPEN!!!!!";
+    }
+}
+
+dbHandler::~dbHandler()
+{
+    db.close();
+    db.removeDatabase("/home/mmorth/GIT/Basketball-Simulation-QT/build-Basketball-Simulation-Desktop_Qt_5_11_0_GCC_64bit-Debug/basketball_simulation_database.sqlite");
 }
 
 void dbHandler::addTeamTable()
 {
-    createConnection();
+    // Create and connect the SQLite database
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/mmorth/GIT/Basketball-Simulation-QT/build-Basketball-Simulation-Desktop_Qt_5_11_0_GCC_64bit-Debug/basketball_simulation_database.sqlite");
+    db.open();
 
     // Create the teams table
-    QString createTeamTableQuery = "CREATE TABLE teams ("
-            "ID int NOT NULL AUTO_INCREMENT,"
+    QString createTeamTableQuery = "CREATE TABLE Teams ("
+            "ID int PRIMARY KEY,"
             "team_name VARCHAR(30) UNIQUE,"
             "offensive_rating integer,"
             "defensive_rating integer);";
@@ -20,66 +36,44 @@ void dbHandler::addTeamTable()
 
     if (!query.exec(createTeamTableQuery))
     {
-        qDebug()<<"Cannot create team table";
+        qDebug()<<query.lastError();
     }
-
-    closeConnection();
 }
 
 void dbHandler::removeTeamTable()
 {
-    createConnection();
+    // Create and connect the SQLite database
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/mmorth/Code/Databases/basketball_simulation_database.sqlite");
+    db.open();
 
     QString removeTeamTableQuery = "DROP TABLE teams;";
     QSqlQuery query;
     query.exec(removeTeamTableQuery);
-
-    closeConnection();
-}
-
-void dbHandler::createConnection()
-{
-    // Create and connect the SQLite database
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/mmorth/Code/Databases/basketball_simulation_database.sqlite");
-
-    // Determine if the database was opened correctly
-    if (!db.open())
-    {
-        qDebug()<<"DBCreateFail";
-    }
-}
-
-void dbHandler::closeConnection()
-{
-    QSqlDatabase db;
 
     db.close();
 }
 
 void dbHandler::addTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
-    createConnection();
+
+    qDebug()<<db.tables();
 
     QSqlQuery query;
 
-    QString insertTeamQuery = "INSERT INTO teams (team_name, offensive_rating, defensive_rating)"
-                  "VALUES (" + teamName + ", " + offensiveRating + ", " + defensiveRating + "); ";
-
-    query.exec(insertTeamQuery);
-
-    if (!query.exec())
+    if (!query.exec("INSERT INTO Teams (team_name, offensive_rating, defensive_rating) VALUES ('" + teamName + "', '" + QString::number(offensiveRating) + "', '" + QString::number(defensiveRating) + "');"))
     {
-        qDebug()<<"Error adding to teams";
+        qDebug()<<query.lastError();
     }
 
-    closeConnection();
 }
 
 void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
-    createConnection();
+    // Create and connect the SQLite database
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/mmorth/Code/Databases/basketball_simulation_database.sqlite");
+    db.open();
 
     QSqlQuery query;
 
@@ -93,5 +87,20 @@ void dbHandler::editTeam(QString teamName, int offensiveRating, int defensiveRat
         qDebug()<<"Error updating teams";
     }
 
-    closeConnection();
+    db.close();
+}
+
+QStringList dbHandler::listTeams()
+{
+    QSqlQuery query;
+
+    query.exec("SELECT team_name FROM Teams;");
+
+    QStringList teams;
+
+    while (query.next()) {
+            teams.append(query.value(0).toString());
+    }
+
+    return teams;
 }

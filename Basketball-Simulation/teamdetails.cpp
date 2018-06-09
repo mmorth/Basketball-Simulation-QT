@@ -13,10 +13,10 @@ TeamDetails::TeamDetails(QWidget *parent) :
     // Set the directions label to read only
     ui->directionsLabel->setReadOnly(true);
 
-    QStringList teams = {"Dragons", "Gators", "Thunder", "Tigers", "Titans"};
+//    QStringList teams = {"Dragons", "Gators", "Thunder", "Tigers", "Titans"};
 
-    // Populate the listview with team names and make the listview not editable
-    ui->teamListView->setModel(new QStringListModel(teams));
+//    // Populate the listview with team names and make the listview not editable
+//    ui->teamListView->setModel(new QStringListModel(teams));
     ui->teamListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // Set the maximum size of a team name to be 30 characters
@@ -27,7 +27,9 @@ TeamDetails::TeamDetails(QWidget *parent) :
     ui->defensiveRatingInput->setValidator( new QIntValidator(30, 100, this) );
 
     // Call to update the teams list view with the newly created team
-    updateTeamsListView();
+    dbHandler dbHand;
+    QStringList teams = dbHand.listTeams();
+    ui->teamListView->setModel(new QStringListModel(teams));
 }
 
 TeamDetails::~TeamDetails()
@@ -41,10 +43,16 @@ void TeamDetails::on_createTeamButton_clicked()
     QString team_name = ui->teamNameInput->text();
 
     // Determine if input is valid and process
-    if (team_name.length() >= 0)
+    if (team_name.length() > 0)
     {
         dbHandler dbHandler;
         dbHandler.addTeam(team_name, ui->offensiveRatingInput->text().toInt(), ui->defensiveRatingInput->text().toInt());
+
+        // Clear the input fields
+        ui->teamNameInput->clear();
+        ui->offensiveRatingInput->clear();
+        ui->defensiveRatingInput->clear();
+        ui->invalidInputIndicator->clear();
     }
     else
     {

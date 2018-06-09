@@ -45,10 +45,6 @@ GameSimulation::GameSimulation(QWidget *parent) :
 
     overtime = false;
 
-//    QSqlDatabase myDB = QSqlDatabase::addDatabase("");
-
-    QStringList teams = {"Dragons", "Gators", "Thunder", "Tigers", "Titans"};
-
     // Load the team information into the table and prevent the user from editing the data in the table
     ui->gameScoreBoard->setItem(1, 0, new QTableWidgetItem(QString::fromStdString(Gators.getTeamName())));
     ui->gameScoreBoard->setItem(2, 0, new QTableWidgetItem(QString::fromStdString(Dragons.getTeamName())));
@@ -66,7 +62,10 @@ GameSimulation::GameSimulation(QWidget *parent) :
     srand ( time(NULL) );
 
     // Update the teams comboboxes with the current teams stored in the database
-    updateTeamsComboboxes();
+    dbHandler dbHand;
+    QStringList teams = dbHand.listTeams();
+    ui->awayTeamCombobox->setModel(new QStringListModel(teams));
+    ui->homeTeamComboBox->setModel(new QStringListModel(teams));
 }
 
 GameSimulation::~GameSimulation()
