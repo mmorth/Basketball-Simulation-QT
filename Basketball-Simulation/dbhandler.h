@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
+#include "team.h"
 
 class dbHandler
 {
@@ -65,6 +66,13 @@ public:
      *      A QSqlQueryModel representing the list of teams in the database
      */
     QStringList listTeams();
+
+    /**
+     * @brief dbHandler::findTeam
+     * @param teamName
+     * @return
+     */
+    Team findTeam(QString teamName);
 
 private:
     QSqlDatabase db;

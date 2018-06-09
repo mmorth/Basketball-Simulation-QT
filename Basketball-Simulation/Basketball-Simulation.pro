@@ -29,16 +29,17 @@ SOURCES += \
     team.cpp \
     teamdetails.cpp \
     dbhandler.cpp \
-    teaminfo.cpp
+    teamwindow.cpp
 
 HEADERS += \
         gamesimulation.h \
     team.h \
     teamdetails.h \
     dbhandler.h \
-    teaminfo.h
+    teamwindow.h
 
 FORMS += \
         gamesimulation.ui \
     teamdetails.ui \
-    teaminfo.ui
+    teaminfo.ui \
+    teamwindow.ui

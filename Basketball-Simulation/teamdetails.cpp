@@ -60,7 +60,7 @@ void TeamDetails::on_createTeamButton_clicked()
     }
 
     // Call to update the teams list view with the newly created team
-    updateTeamsListView();
+//    updateTeamsListView();
 
 }
 
@@ -72,7 +72,12 @@ void TeamDetails::on_scoreBoardButton_clicked()
     gs->show();
 }
 
-void TeamDetails::updateTeamsListView()
+void TeamDetails::on_teamListView_doubleClicked(const QModelIndex &index)
 {
+    QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->teamListView->model());
+    QString teamName = listModel->stringList().at(index.row());
 
+    hide();
+    TeamWindow *tw = new TeamWindow(this, teamName);
+    tw->show();
 }

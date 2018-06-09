@@ -112,6 +112,10 @@ private slots:
      */
     void on_teamDetailsButton_clicked();
 
+    void on_awayTeamCombobox_activated(const QString &arg1);
+
+    void on_homeTeamComboBox_activated(const QString &arg1);
+
 private:
     /**
      * @brief ui

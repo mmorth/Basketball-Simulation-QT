@@ -2,6 +2,7 @@
 #define TEAMDETAILS_H
 
 #include <QDialog>
+#include "teamwindow.h"
 //#include "gamesimulation.h"
 
 namespace Ui {
@@ -34,6 +35,8 @@ private slots:
      *      Switches to the scoreboard window when the button is clicked
      */
     void on_scoreBoardButton_clicked();
+
+    void on_teamListView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::TeamDetails *ui;

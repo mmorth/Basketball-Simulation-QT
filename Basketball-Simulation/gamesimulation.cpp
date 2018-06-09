@@ -293,7 +293,16 @@ void GameSimulation::on_teamDetailsButton_clicked()
     teamDetails->show();
 }
 
-void GameSimulation::updateTeamsComboboxes()
+void GameSimulation::on_awayTeamCombobox_activated(const QString &arg1)
 {
+    dbHandler dbHand;
+    this->awayTeam = dbHand.findTeam(arg1);
+    ui->gameScoreBoard->setItem(1, 0, new QTableWidgetItem(arg1));
+}
 
+void GameSimulation::on_homeTeamComboBox_activated(const QString &arg1)
+{
+    dbHandler dbHand;
+    this->homeTeam = dbHand.findTeam(arg1);
+    ui->gameScoreBoard->setItem(2, 0, new QTableWidgetItem(arg1));
 }

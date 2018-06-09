@@ -104,3 +104,19 @@ QStringList dbHandler::listTeams()
 
     return teams;
 }
+
+Team dbHandler::findTeam(QString teamName)
+{
+    QSqlQuery query;
+
+    query.exec("SELECT * FROM Teams WHERE team_name = '" + teamName + "';");
+
+    query.first();
+
+    int offensiveRating = query.value(2).toInt();
+    int defensiveRating = query.value(3).toInt();
+
+    Team lookupTeam(teamName.toStdString(), offensiveRating, defensiveRating);
+
+    return lookupTeam;
+}
