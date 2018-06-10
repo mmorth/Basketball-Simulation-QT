@@ -112,8 +112,20 @@ private slots:
      */
     void on_teamDetailsButton_clicked();
 
+    /**
+     * @brief on_awayTeamCombobox_activated
+     *      Changes the away team when the combobox selection is changed
+     * @param arg1
+     *      The name of the Team that was selected
+     */
     void on_awayTeamCombobox_activated(const QString &arg1);
 
+    /**
+     * @brief on_homeTeamComboBox_activated
+     *      Changes the away team when the combobox selection is changed
+     * @param arg1
+     *      The name of the Team that was selected
+     */
     void on_homeTeamComboBox_activated(const QString &arg1);
 
 private:
@@ -167,6 +179,10 @@ private:
      */
     bool overtime;
 
+    /**
+     * @brief resetGame
+     *      Resets the game simulation
+     */
     void resetGame();
 };
 

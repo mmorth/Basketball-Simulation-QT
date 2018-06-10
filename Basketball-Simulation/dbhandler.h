@@ -17,16 +17,11 @@ public:
      */
     dbHandler();
 
+    // The destructor for the dbHandler class
     ~dbHandler();
 
     /**
-     * @brief dbHandler::addTeamTable
-     *      Adds the team table
-     */
-    void addTeamTable();
-
-    /**
-     * @brief dbHandler::editTeam
+     * @brief editTeam
      *      Edits a team in the sqlite database
      * @param id
      *      The id of the team
@@ -38,12 +33,6 @@ public:
      *      The defensive rating of the team
      */
     void editTeam(QString teamName, int offensiveRating, int defensiveRating);
-
-    /**
-     * @brief dbHandler::removeTeamTable
-     *      Removes the team table
-     */
-    void removeTeamTable();
 
     /**
      * @brief dbHandler::addValue
@@ -60,8 +49,10 @@ public:
     void addTeam(QString teamName, int offensiveRating, int defensiveRating);
 
     /**
-     * @brief dbHandler::removeTeam
+     * @brief removeTeam
+     *      Removes a team from the sqlite database
      * @param teamName
+     *      The teamName of the Team to remove
      */
     void removeTeam(QString teamName);
 
@@ -74,13 +65,20 @@ public:
     QStringList listTeams();
 
     /**
-     * @brief dbHandler::findTeam
+     * @brief findTeam
+     *      Returns a Team based on the input teamName
      * @param teamName
+     *      The teamName of the team to return
      * @return
+     *      A Team representing the teamName input
      */
     Team findTeam(QString teamName);
 
 private:
+    /**
+     * @brief db
+     *      Represents the sqlite database
+     */
     QSqlDatabase db;
 
 };

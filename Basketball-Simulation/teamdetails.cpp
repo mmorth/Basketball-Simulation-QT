@@ -13,10 +13,7 @@ TeamDetails::TeamDetails(QWidget *parent) :
     // Set the directions label to read only
     ui->directionsLabel->setReadOnly(true);
 
-//    QStringList teams = {"Dragons", "Gators", "Thunder", "Tigers", "Titans"};
-
-//    // Populate the listview with team names and make the listview not editable
-//    ui->teamListView->setModel(new QStringListModel(teams));
+    // Populate the listview with team names and make the listview not editable
     ui->teamListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // Set the maximum size of a team name to be 30 characters
@@ -76,6 +73,7 @@ void TeamDetails::on_scoreBoardButton_clicked()
 
 void TeamDetails::on_teamListView_doubleClicked(const QModelIndex &index)
 {
+    // Get the team name of the team to display
     QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->teamListView->model());
     QString teamName = listModel->stringList().at(index.row());
 

@@ -13,7 +13,15 @@ class TeamDetails : public QDialog
     Q_OBJECT
 
 public:
+    /**
+     * @brief TeamDetails
+     *      Constructs the TeamDetails window
+     * @param parent
+     *      The parents window
+     */
     explicit TeamDetails(QWidget *parent = 0);
+
+    // The destructor for the TeamDetails class
     ~TeamDetails();
 
     /**
@@ -35,9 +43,19 @@ private slots:
      */
     void on_scoreBoardButton_clicked();
 
+    /**
+     * @brief on_teamListView_doubleClicked
+     *      Opens the team-specific window when a team name is double clicked
+     * @param index
+     *      The index of the team that was selected
+     */
     void on_teamListView_doubleClicked(const QModelIndex &index);
 
 private:
+    /**
+     * @brief ui
+     *      Represents the ui of the window
+     */
     Ui::TeamDetails *ui;
 };
 

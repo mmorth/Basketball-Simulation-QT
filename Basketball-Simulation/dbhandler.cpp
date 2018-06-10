@@ -18,42 +18,6 @@ dbHandler::~dbHandler()
     db.removeDatabase("/home/mmorth/GIT/Basketball-Simulation-QT/build-Basketball-Simulation-Desktop_Qt_5_11_0_GCC_64bit-Debug/basketball_simulation_database.sqlite");
 }
 
-void dbHandler::addTeamTable()
-{
-    // Create and connect the SQLite database
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/mmorth/GIT/Basketball-Simulation-QT/build-Basketball-Simulation-Desktop_Qt_5_11_0_GCC_64bit-Debug/basketball_simulation_database.sqlite");
-    db.open();
-
-    // Create the teams table
-    QString createTeamTableQuery = "CREATE TABLE Teams ("
-            "ID int PRIMARY KEY,"
-            "team_name VARCHAR(30) UNIQUE,"
-            "offensive_rating integer,"
-            "defensive_rating integer);";
-
-    QSqlQuery query;
-
-    if (!query.exec(createTeamTableQuery))
-    {
-        qDebug()<<query.lastError();
-    }
-}
-
-void dbHandler::removeTeamTable()
-{
-    // Create and connect the SQLite database
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/mmorth/Code/Databases/basketball_simulation_database.sqlite");
-    db.open();
-
-    QString removeTeamTableQuery = "DROP TABLE teams;";
-    QSqlQuery query;
-    query.exec(removeTeamTableQuery);
-
-    db.close();
-}
-
 void dbHandler::addTeam(QString teamName, int offensiveRating, int defensiveRating)
 {
     QSqlQuery query;
@@ -112,6 +76,7 @@ Team dbHandler::findTeam(QString teamName)
 
     query.first();
 
+    // Get the offensive and defensive rating
     int offensiveRating = query.value(2).toInt();
     int defensiveRating = query.value(3).toInt();
 
