@@ -19,9 +19,8 @@ Open the root project folder in QT
 Press the play button in QT to run the code. This will open a window with the application contained within.
 
 ## Built With
-* [Angular](https://angular.io/docs) - Front-end
-* [Spring](https://spring.io/docs) - Back-end
-* [MySQL](https://dev.mysql.com/doc/) - Database
+* [C++](https://www.tutorialspoint.com/cplusplus/cpp_environment_setup.htm) - Programming Language
+* [QT](http://doc.qt.io/qt-5/gettingstarted.html) - Application framework
 
 ## Authors
 Matthew Orth
