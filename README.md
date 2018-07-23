@@ -11,9 +11,9 @@ These instructions will get you a copy of the project up and running on your loc
 ### Project Setup
 Using Git Bash or the Linux Terminal, navigate to the folder where you want the project located
 
-'''
+```
 git clone https://github.com/mmorth/Basketball-Simulation-QT.git
-'''
+```
 Open the root project folder in QT
 
 Press the play button in QT to run the code. This will open a window with the application contained within.
